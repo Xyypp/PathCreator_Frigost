@@ -2008,6 +2008,209 @@ function initializeExtension() {
 // Initialisation immédiate si le DOM est prêt
 if (document.readyState === "complete" || document.readyState === "interactive") {
     debug("DOM déjà chargé, initialisation immédiate");
+
+    // ============================================================================
+// FONCTIONS D'IMPORT DE TRAJET - V5.0
+// ============================================================================
+
+/**
+ * Configure les gestionnaires d'événements pour l'import
+ */
+function setupImportHandlers(ui) {
+    const textarea = document.getElementById('import-textarea');
+    const analyzeBtn = document.getElementById('import-analyze-btn');
+    const loadBtn = document.getElementById('import-load-btn');
+    const clearBtn = document.getElementById('import-clear-btn');
+    const statusDiv = document.getElementById('import-status');
+    
+    let lastParseResult = null;
+    
+    // Analyser le script
+    analyzeBtn.addEventListener('click', () => {
+        const text = textarea.value.trim();
+        
+        if (!text) {
+            showNotification('❌ Veuillez coller un script à analyser', 'error');
+            return;
+        }
+        
+        debug('🔍 Analyse du script importé...');
+        
+        // Parser le script
+        const parser = new LuaScriptParser();
+        lastParseResult = parser.import(text);
+        
+        // Afficher le résultat
+        displayImportStatus(lastParseResult, statusDiv);
+        
+        // Activer/désactiver le bouton de chargement
+        loadBtn.disabled = !lastParseResult.success;
+        
+        if (lastParseResult.success) {
+            showNotification(
+                `✅ Script valide: ${lastParseResult.path.length} points détectés`,
+                'success'
+            );
+        } else {
+            showNotification('❌ Erreur dans le script', 'error');
+        }
+    });
+    
+    // Charger le trajet
+    loadBtn.addEventListener('click', () => {
+        if (!lastParseResult || !lastParseResult.success) {
+            showNotification('❌ Analysez d\'abord le script', 'error');
+            return;
+        }
+        
+        // Demander confirmation si un trajet existe déjà
+        if (window.frigostPathCreator.currentPath.length > 0) {
+            if (!confirm(`⚠️ Vous avez déjà ${window.frigostPathCreator.currentPath.length} points dans le trajet actuel.\n\nVoulez-vous les remplacer par le trajet importé (${lastParseResult.path.length} points) ?`)) {
+                return;
+            }
+        }
+        
+        debug('📥 Chargement du trajet importé...');
+        
+        // Charger le trajet
+        loadImportedPath(lastParseResult);
+        
+        // Fermer la section d'import
+        toggleSection('import');
+        
+        showNotification(
+            `✅ Trajet chargé: ${lastParseResult.path.length} points + configuration`,
+            'success'
+        );
+        
+        // Effacer le textarea et le statut
+        textarea.value = '';
+        statusDiv.style.display = 'none';
+        loadBtn.disabled = true;
+        lastParseResult = null;
+    });
+    
+    // Effacer le textarea
+    clearBtn.addEventListener('click', () => {
+        textarea.value = '';
+        statusDiv.style.display = 'none';
+        loadBtn.disabled = true;
+        lastParseResult = null;
+        debug('🗑️ Zone d\'import effacée');
+    });
+    
+    debug('✅ Gestionnaires d\'import configurés');
+}
+
+/**
+ * Affiche le statut du parsing
+ */
+function displayImportStatus(result, statusDiv) {
+    statusDiv.style.display = 'block';
+    
+    let html = '';
+    
+    if (result.success) {
+        html += `
+            <div class="status-success">
+                <div class="status-header">
+                    <span class="status-icon">✅</span>
+                    <span class="status-title">Script Valide</span>
+                </div>
+                <div class="status-details">
+                    <div class="status-item">
+                        <strong>📍 Points:</strong> ${result.path.length}
+                    </div>
+                    <div class="status-item">
+                        <strong>⚙️ Configuration:</strong> ${Object.keys(result.config).length} paramètres
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        if (result.warnings.length > 0) {
+            html += `
+                <div class="status-warnings">
+                    <div class="status-header">
+                        <span class="status-icon">⚠️</span>
+                        <span class="status-title">Avertissements (${result.warnings.length})</span>
+                    </div>
+                    <ul class="status-list">
+                        ${result.warnings.map(w => `<li>${w}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+    } else {
+        html += `
+            <div class="status-error">
+                <div class="status-header">
+                    <span class="status-icon">❌</span>
+                    <span class="status-title">Erreurs Détectées</span>
+                </div>
+                <ul class="status-list">
+                    ${result.errors.map(e => `<li>${e}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+    
+    statusDiv.innerHTML = html;
+}
+
+/**
+ * Charge un trajet importé dans l'application
+ */
+function loadImportedPath(parseResult) {
+    debug('🔄 Début du chargement du trajet importé...');
+    
+    // 1. Effacer le trajet actuel et les marqueurs
+    clearPath();
+    
+    // 2. Charger la configuration
+    if (parseResult.config && Object.keys(parseResult.config).length > 0) {
+        debug(`⚙️ Chargement de ${Object.keys(parseResult.config).length} paramètres de configuration`);
+        Object.assign(window.frigostPathCreator.config, parseResult.config);
+        loadConfigurationIntoUI();
+        saveConfiguration();
+    }
+    
+    // 3. Charger le trajet
+    debug(`📍 Chargement de ${parseResult.path.length} points`);
+    window.frigostPathCreator.currentPath = parseResult.path;
+    
+    // 4. Mettre à jour l'affichage de la liste
+    updatePathList();
+    
+    // 5. Créer les marqueurs sur la carte (après un délai pour laisser le DOM se mettre à jour)
+    setTimeout(() => {
+        debug('🗺️ Création des marqueurs visuels...');
+        let markersCreated = 0;
+        
+        parseResult.path.forEach((point, index) => {
+            try {
+                // Créer le marqueur
+                addCheckmarkToMap(point.x, point.y);
+                markersCreated++;
+            } catch (error) {
+                console.error(`❌ Erreur lors de la création du marqueur ${index + 1}:`, error);
+            }
+        });
+        
+        debug(`✅ Trajet importé: ${markersCreated}/${parseResult.path.length} marqueurs créés`);
+        
+        if (markersCreated < parseResult.path.length) {
+            showNotification(
+                `⚠️ ${markersCreated}/${parseResult.path.length} marqueurs créés. Certains peuvent être hors de la zone visible.`,
+                'warning'
+            );
+        }
+    }, 500);
+}
+
+// FIN DES FONCTIONS D'IMPORT
+// ============================================================================
+
     initializeExtension();
 } else {
     debug("DOM en cours de chargement, attente...");
