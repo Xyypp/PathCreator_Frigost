@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Frigost Path Creator V5",
+  "version": "5.0",
+  "description": "Créez des scripts Dofus avec syntaxe officielle Frigost V5 (MAX_MONSTERS, GATHER, AUTO_DELETE) depuis DofusDB - Memory Bank Era",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "clipboardWrite",
+    "contextMenus",
+    "scripting",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://dofusdb.fr/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://dofusdb.fr/map/tools/map*",
+        "*://dofusdb.fr/fr/tools/map*",
+        "*://dofusdb.fr/tools/map*",
+        "*://dofusdb.fr/*/tools/map*"
+      ],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+} 

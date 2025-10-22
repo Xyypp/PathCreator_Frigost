@@ -1,0 +1,389 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 420px;
+    min-height: 600px;
+    max-height: 700px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    overflow-y: auto;
+}
+
+.popup-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    font-size: 32px;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+.title-section h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.version {
+    font-size: 12px;
+    opacity: 0.8;
+    color: #ecf0f1;
+}
+
+/* Status Section */
+.status-section {
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-icon {
+    font-size: 16px;
+}
+
+.status-text {
+    font-size: 14px;
+}
+
+.status-text.active {
+    color: #27ae60;
+}
+
+.status-text.inactive {
+    color: #e74c3c;
+}
+
+/* Content Sections */
+.description, .features, .usage-guide, .configuration, .updates, .links {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h2 {
+    color: #3498db;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.description p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #bdc3c7;
+}
+
+/* Features Grid */
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.feature-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.feature-content h3 {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ecf0f1;
+}
+
+.feature-content p {
+    font-size: 11px;
+    color: #95a5a6;
+    line-height: 1.4;
+}
+
+/* Usage Guide */
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.step-number {
+    background: #3498db;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ecf0f1;
+}
+
+.step-content p {
+    font-size: 12px;
+    color: #bdc3c7;
+    line-height: 1.4;
+}
+
+.step-content a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.step-content a:hover {
+    text-decoration: underline;
+}
+
+/* Configuration Tabs */
+.config-tabs {
+    display: flex;
+    margin-bottom: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.config-tab {
+    flex: 1;
+    padding: 10px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 12px;
+    font-weight: bold;
+    color: #95a5a6;
+}
+
+.config-tab:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.config-tab.active {
+    background: #3498db;
+    color: white;
+}
+
+.config-content {
+    position: relative;
+}
+
+.config-panel {
+    display: none;
+}
+
+.config-panel.active {
+    display: block;
+}
+
+.config-panel h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #ecf0f1;
+}
+
+.config-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.config-list li {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #bdc3c7;
+    line-height: 1.4;
+}
+
+.config-list strong {
+    color: #3498db;
+}
+
+.config-list code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #e67e22;
+}
+
+/* Updates */
+.update-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.update-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #bdc3c7;
+}
+
+.update-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+/* Links */
+.link-grid {
+    display: flex;
+    gap: 10px;
+}
+
+.link-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    text-decoration: none;
+    color: #ecf0f1;
+    transition: all 0.2s ease;
+    font-size: 13px;
+}
+
+.link-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.link-icon {
+    font-size: 18px;
+}
+
+/* Footer */
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 12px;
+    color: #95a5a6;
+}
+
+.footer p {
+    margin-bottom: 5px;
+}
+
+.copyright {
+    opacity: 0.7;
+}
+
+/* Scrollbar */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.feature-item, .step, .update-item {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-height: 600px) {
+    .popup-container {
+        font-size: 90%;
+    }
+    
+    .header {
+        padding: 15px;
+    }
+    
+    .description, .features, .usage-guide, .configuration, .updates, .links {
+        padding: 15px;
+    }
+}
+
+/* Loading state */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading .status-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+} 

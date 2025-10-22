@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic - Frigost Path Creator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #3498db;
+            text-align: center;
+        }
+        .section {
+            background: #2c3e50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #34495e;
+        }
+        .section h2 {
+            color: #3498db;
+            margin-top: 0;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .status.success {
+            background: #27ae60;
+        }
+        .status.error {
+            background: #e74c3c;
+        }
+        .status.warning {
+            background: #f39c12;
+        }
+        .code {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        #logs {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>❄️ Diagnostic - Frigost Path Creator ❄️</h1>
+        
+        <div class="section">
+            <h2>📊 État de l'extension</h2>
+            <div id="extension-status"></div>
+        </div>
+
+        <div class="section">
+            <h2>🔧 Tests disponibles</h2>
+            <button onclick="testContentScript()">Tester Content Script</button>
+            <button onclick="testStorage()">Tester Storage</button>
+            <button onclick="clearStorage()">Effacer Storage</button>
+            <button onclick="reloadExtension()">Recharger Extension</button>
+        </div>
+
+        <div class="section">
+            <h2>📝 Logs</h2>
+            <div id="logs"></div>
+        </div>
+
+        <div class="section">
+            <h2>💾 Données stockées</h2>
+            <div id="storage-data" class="code"></div>
+        </div>
+    </div>
+
+    <script src="debug.js"></script>
+</body>
+</html> 

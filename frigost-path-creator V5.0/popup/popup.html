@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frigost Path Creator</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="popup-container">
+        <div class="header">
+            <div class="logo">❄️</div>
+            <div class="title-section">
+                <h1>Frigost Path Creator</h1>
+                <p class="version">Version 3.0 - Syntaxe Officielle Frigost</p>
+            </div>
+        </div>
+
+        <div class="status-section">
+            <div class="status-item">
+                <span class="status-icon" id="statusIcon">🔄</span>
+                <span class="status-text" id="statusText">Vérification...</span>
+            </div>
+        </div>
+
+        <div class="description">
+            <h2>🎯 Description</h2>
+            <p>Extension Chrome pour créer des chemins de bot Dofus avec la <strong>syntaxe officielle Frigost</strong>. Génère des scripts 100% compatibles avec la documentation officielle : MAX_MONSTERS, FORBIDDEN_MONSTERS, GATHER, AUTO_DELETE, PLANNING. Cliquez sur DofusDB pour créer du code Lua parfaitement conforme !</p>
+        </div>
+
+        <div class="features">
+            <h2>✨ Fonctionnalités</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">🗺️</span>
+                    <div class="feature-content">
+                        <h3>Création Visuelle</h3>
+                        <p>Cliquez sur DofusDB pour ajouter des points au chemin</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚔️</span>
+                    <div class="feature-content">
+                        <h3>Actions Configurables</h3>
+                        <p>Combat et récolte avec configuration avancée</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🧭</span>
+                    <div class="feature-content">
+                        <h3>Directions Multiples</h3>
+                        <p>Support des sorties multidirectionnelles</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">👹</span>
+                    <div class="feature-content">
+                        <h3>Config Monstres</h3>
+                        <p>Min/Max monstres, whitelist/blacklist</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🌿</span>
+                    <div class="feature-content">
+                        <h3>Gestion Ressources</h3>
+                        <p>Récolte sélective et auto-suppression</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⏰</span>
+                    <div class="feature-content">
+                        <h3>Planning Auto</h3>
+                        <p>Déconnexions programmées par heures</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🚀</span>
+                    <div class="feature-content">
+                        <h3>Téléportation Auto</h3>
+                        <p>Détection de zone et téléportation automatique avec clic chat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="usage-guide">
+            <h2>📖 Guide d'utilisation</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        <h3>Accédez à DofusDB</h3>
+                        <p>Naviguez vers <a href="https://dofusdb.fr/map/tools/map" target="_blank">dofusdb.fr/map/tools/map</a></p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        <h3>Interface Automatique</h3>
+                        <p>L'interface apparaît automatiquement sur le côté gauche</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        <h3>Configuration</h3>
+                        <p>Sélectionnez actions (Combat/Récolte) et directions</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        <h3>Création du Chemin</h3>
+                        <p>Cliquez sur la carte pour ajouter des points. Une ✅ verte apparaît</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <div class="step-content">
+                        <h3>Export Lua</h3>
+                        <p>Cliquez "Copier" pour obtenir le script Frigost</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="configuration">
+            <h2>⚙️ Configuration Avancée</h2>
+            <div class="config-tabs">
+                <div class="config-tab active" data-tab="monsters">Monstres</div>
+                <div class="config-tab" data-tab="resources">Ressources</div>
+                <div class="config-tab" data-tab="planning">Planning</div>
+                <div class="config-tab" data-tab="autotravel">Auto-Travel</div>
+                <div class="config-tab" data-tab="chat">Chat</div>
+            </div>
+            
+            <div class="config-content">
+                <div class="config-panel active" id="monsters-panel">
+                    <h3>👹 Configuration Monstres (Syntaxe Officielle)</h3>
+                    <ul class="config-list">
+                        <li><strong>MAX_MONSTERS</strong> : Nombre maximum de monstres dans un groupe (1-8)</li>
+                        <li><strong>MIN_MONSTERS</strong> : Nombre minimum de monstres dans un groupe (1-8)</li>
+                        <li><strong>FORCE_MONSTERS</strong> : IDs des monstres obligatoires dans le groupe</li>
+                        <li><strong>FORBIDDEN_MONSTERS</strong> : IDs des monstres interdits dans le groupe</li>
+                        <li><strong>AMOUNT_MONSTERS</strong> : Contrôle précis du nombre par type de monstre</li>
+                    </ul>
+                </div>
+                <div class="config-panel" id="resources-panel">
+                    <h3>🌿 Configuration Ressources (Syntaxe Officielle)</h3>
+                    <ul class="config-list">
+                        <li><strong>GATHER</strong> : IDs des ressources (positifs = récolter, négatifs = éviter)</li>
+                        <li><strong>AUTO_DELETE</strong> : IDs des objets à supprimer automatiquement</li>
+                        <li>Exemple GATHER : { 254, 255, -67 } (récolte 254,255 mais évite 67)</li>
+                        <li>Utilise les paramètres natifs de Frigost pour une compatibilité parfaite</li>
+                    </ul>
+                </div>
+                <div class="config-panel" id="planning-panel">
+                    <h3>⏰ Planning de Déconnexion (Syntaxe Officielle)</h3>
+                    <ul class="config-list">
+                        <li><strong>PLANNING</strong> : Heures de déconnexion automatique (0-23)</li>
+                        <li>Syntaxe officielle Frigost : PLANNING = { 1, 2, 4, 20, 21, 22 }</li>
+                        <li>Évite la détection par les patterns de connexion</li>
+                        <li>Compatible avec la documentation officielle Frigost</li>
+                    </ul>
+                </div>
+                <div class="config-panel" id="autotravel-panel">
+                    <h3>🚀 Configuration Auto-Travel</h3>
+                    <div class="config-item">
+                        <label>
+                            <input type="checkbox" id="autoTravelEnabled"> 
+                            Activer l'auto-travel (téléportation automatique)
+                        </label>
+                    </div>
+                    <ul class="config-list">
+                        <li><strong>DÉSACTIVÉ</strong> : Le script démarre sur une des cartes du chemin</li>
+                        <li><strong>ACTIVÉ</strong> : Téléportation automatique vers la première carte</li>
+                        <li>Recommandé : Désactivé si vous êtes déjà dans la zone</li>
+                        <li>Activé : Utile pour démarrer depuis n'importe où</li>
+                    </ul>
+                </div>
+                <div class="config-panel" id="chat-panel">
+                    <h3>💬 Configuration Chat</h3>
+                    <ul class="config-list">
+                        <li><strong>COORDONNÉES CHAT</strong> : Position X,Y du chat pour le focus</li>
+                        <li><strong>Par défaut</strong> : 152, 996 (position standard du chat)</li>
+                        <li>Génère automatiquement : <code>mouse.click(X, Y, false)</code></li>
+                        <li>Nécessaire pour que les commandes /travel fonctionnent</li>
+                        <li>Ajustez si votre interface est différente</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="updates">
+            <h2>🆕 Mises à Jour v3.0 - Syntaxe Officielle Frigost</h2>
+            <div class="update-list">
+                <div class="update-item">
+                    <span class="update-icon">📋</span>
+                    <span>Syntaxe officielle Frigost : MAX_MONSTERS, MIN_MONSTERS, FORBIDDEN_MONSTERS</span>
+                </div>
+                <div class="update-item">
+                    <span class="update-icon">⚔️</span>
+                    <span>Support complet FORCE_MONSTERS et AMOUNT_MONSTERS</span>
+                </div>
+                <div class="update-item">
+                    <span class="update-icon">🌿</span>
+                    <span>Paramètre GATHER avec support des IDs négatifs (éviter ressources)</span>
+                </div>
+                <div class="update-item">
+                    <span class="update-icon">🗑️</span>
+                    <span>AUTO_DELETE officiel pour suppression automatique d'objets</span>
+                </div>
+                <div class="update-item">
+                    <span class="update-icon">⏰</span>
+                    <span>PLANNING pour déconnexions programmées (heures 0-23)</span>
+                </div>
+                <div class="update-item">
+                    <span class="update-icon">🔧</span>
+                    <span>Scripts 100% compatibles avec la documentation Frigost officielle</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="links">
+            <h2>🔗 Liens Utiles</h2>
+            <div class="link-grid">
+                <a href="https://dofusdb.fr/map/tools/map" target="_blank" class="link-item">
+                    <span class="link-icon">🗺️</span>
+                    <span>DofusDB Map</span>
+                </a>
+                <a href="https://doc.frigost.dev/dofus-3.0/" target="_blank" class="link-item">
+                    <span class="link-icon">📚</span>
+                    <span>Documentation Frigost</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Développé pour la communauté Dofus 🐉</p>
+            <p class="copyright">© 2024 Frigost Path Creator - Extension Chrome</p>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html> 
