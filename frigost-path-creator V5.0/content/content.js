@@ -143,6 +143,51 @@ function createPathCreatorUI() {
             <h2>❄️🗺️ Frigost Path Creator</h2>
             <div class="version">v3.0 📋 Syntaxe Officielle</div>
         </div>
+
+        <!-- NOUVELLE SECTION: Import -->
+        <div class="section collapsible">
+            <h3 class="section-header" data-section="import">
+                <span class="toggle-icon">▼</span> 📥 Importer un Trajet
+            </h3>
+            <div class="section-content" id="import-content">
+                <div class="import-container">
+                    <textarea 
+                        id="import-textarea" 
+                        placeholder="Collez votre script Lua ou JSON ici...
+
+        Exemple Lua:
+        mapActionsTable = {
+            { map = '-16,-22', path = 'right', fight = true },
+            { map = '-15,-22', path = 'bottom', fight = true }
+        }
+
+        Exemple JSON:
+        { 'route': [...] }"
+                        rows="8"
+                        class="import-textarea"
+                    ></textarea>
+                    
+                    <div class="import-info">
+                        <span class="info-icon">ℹ️</span>
+                        <span class="info-text">Formats: Script Lua complet, mapActionsTable, ou JSON</span>
+                    </div>
+                    
+                    <div class="import-actions">
+                        <button class="control-btn import-btn" id="import-analyze-btn">
+                            🔍 Analyser
+                        </button>
+                        <button class="control-btn import-load-btn" id="import-load-btn" disabled>
+                            📥 Charger le Trajet
+                        </button>
+                        <button class="control-btn" id="import-clear-btn">
+                            🗑️ Effacer
+                        </button>
+                    </div>
+                    
+                    <div id="import-status" class="import-status" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
         
         <div class="section">
             <h3>🎯 Actions</h3>
@@ -290,6 +335,7 @@ function createPathCreatorUI() {
     
     // Configurer les événements
     setupEventListeners(ui);
+    setupImportHandlers(ui);
     
     // Charger les valeurs de configuration dans l'interface
     loadConfigurationIntoUI();
