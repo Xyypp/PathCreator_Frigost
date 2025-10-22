@@ -921,3 +921,144 @@
     color: var(--text-primary);
     font-weight: 400;
 }
+/* ============================================================================ */
+/* STYLES POUR L'IMPORT DE TRAJET - V5.0 */
+/* ============================================================================ */
+
+.import-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.import-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: var(--transition);
+}
+
+.import-textarea:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.import-textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.import-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(0, 212, 255, 0.1);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.info-icon {
+    font-size: 16px;
+}
+
+.import-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.import-btn, .import-load-btn {
+    flex: 1;
+}
+
+.import-load-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #555 0%, #444 100%) !important;
+}
+
+.import-status {
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-success {
+    border-left: 4px solid #26de81;
+}
+
+.status-error {
+    border-left: 4px solid #ff6b6b;
+}
+
+.status-warnings {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #ffa726;
+}
+
+.status-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.status-icon {
+    font-size: 18px;
+}
+
+.status-title {
+    font-size: 14px;
+}
+
+.status-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.status-item {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.status-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+}
+
+.status-list li {
+    padding: 6px 8px;
+    margin: 4px 0;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.status-error .status-list li {
+    border-left: 2px solid #ff6b6b;
+}
+
+.status-warnings .status-list li {
+    border-left: 2px solid #ffa726;
+}
