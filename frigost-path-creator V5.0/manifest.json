@@ -33,7 +33,7 @@
         "*://dofusdb.fr/tools/map*",
         "*://dofusdb.fr/*/tools/map*"
       ],
-      "js": ["content/content.js"],
+      "js": ["content/lua-parser.js", "content/content.js"],
       "css": ["content/content.css"],
       "run_at": "document_end"
     }
